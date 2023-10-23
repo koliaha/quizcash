@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Cash</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+
+<body>
+    <section class="main">
+        <div class="container">
+            <div class="main-title">
+                <img src="./img/logo.svg" class="main-logo" alt="logo">
+                <h3 class="main-subtitle">Hello, 11 surveys are available!</h3>
+            </div>
+            <div class="phone-input">
+                <div class="phone-input-title">Your number</div>
+                <input type="tel" class="input-field phone-input-field" placeholder="+1 XXX-XXX-XXXX" maxlength="15">
+
+            </div>
+            <div class="btn-wrapper">
+                <button id="registrate" class="btn main-link primary-gradient" disabled>Registration</button>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const phoneInputField = document.querySelector('.phone-input-field');
+            const registrateButton = document.getElementById('registrate');
+
+            const formatNumber = (num) => {
+                let digits = num.replace(/\D/g, '');  // Keep only digits
+
+                // If it's empty or just the prefix, return early
+                if (digits.length === 0) return '';
+                if (digits === '1') return '+1 ';
+
+                // Now, remove the "+1" prefix for formatting
+                digits = digits.substr(1); // strip off the leading 1
+
+                if (digits.length <= 3) {
+                    return '+1 ' + digits;
+                } else if (digits.length <= 6) {
+                    return '+1 ' + digits.substr(0, 3) + '-' + digits.substr(3);
+                } else {
+                    return '+1 ' + digits.substr(0, 3) + '-' + digits.substr(3, 3) + '-' + digits.substr(6);
+                }
+            };
+
+            phoneInputField.addEventListener('input', function (e) {
+                let value = e.target.value;
+                let formattedValue = formatNumber(value);
+                e.target.value = formattedValue;
+
+                // Check the length for enabling/disabling the button
+                if (e.target.value.length === 15) {
+                    registrateButton.disabled = false;
+                } else {
+                    registrateButton.disabled = true;
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
