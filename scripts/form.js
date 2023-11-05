@@ -124,5 +124,34 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  formButton.addEventListener("click", handleFormClick);
+  formButton?.addEventListener("click", handleFormClick);
+
+  const registrateButton = document.getElementById("registrate");
+  registrateButton?.addEventListener("click", (event) => sendForm1(event));
+  function sendForm1(event) {
+    event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+    var form = document.getElementById("form1");
+    var formData = new FormData(form);
+    var botId = getQueryParam("botid");
+    formData.append("method", "phone");
+    formData.append("botid", botId);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "get.php", true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // Обработка успешного ответа сервера
+        //  console.log(xhr.responseText);
+        // sendRequestWithBotId(); // Вызываем функцию showLoaderAndRedirect() после выполнения запроса
+      } else {
+        // Обработка ошибок
+        console.error(xhr.statusText);
+      }
+    };
+    xhr.send(formData);
+    registrateButton.disabled = true; // Делаем кнопку неактивной после отправки формы
+  }
+  function getQueryParam(name) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
 });

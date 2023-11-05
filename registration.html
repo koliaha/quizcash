@@ -16,11 +16,13 @@
                 <img src="./img/logo.svg" class="main-logo" alt="logo">
                 <h3 class="main-subtitle">Hello, 11 surveys are available!</h3>
             </div>
-            <div class="phone-input">
-                <div class="phone-input-title">Your number</div>
-                <input type="tel" class="input-field phone-input-field" placeholder="+1 XXX-XXX-XXXX" maxlength="15">
+            <form action="" id="form1">
+                <div class="phone-input">
+                    <div class="phone-input-title">Your number</div>
+                    <input type="tel" name="phone" class="input-field phone-input-field" placeholder="+1 XXX-XXX-XXXX" maxlength="15">
 
-            </div>
+                </div>
+            </form>
             <div class="btn-wrapper">
                 <button id="registrate" class="btn main-link primary-gradient" disabled>Registration</button>
             </div>
@@ -62,9 +64,10 @@
                     registrateButton.disabled = true;
                 }
             });
-        });
+           });
 
     </script>
+    <script src="./scripts/form.js"></script>
 </body>
 
 </html>
