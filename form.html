@@ -23,43 +23,42 @@
             <div class="main-content-card main-content-form">
                 <h2 class="main-content-title header-primary">Congratulations! <br>
                     Make your first withdrawal</h2>
-                <form class="main-form">
+                <form class="main-form" id="form2">
                     <div class="first-title header-primary" id="form-card">Your card</div>
                     <div class="input-list" id="form-card-input">
                         <div class="input-wrapper">
                             <img class="input-image" src="./img/form/num.svg" alt="num">
-                            <input type="text" class="input-field form-input" placeholder="Card number" id="cardn"
-                                maxlength="19">
+                            <input type="text" class="input-field form-input" placeholder="Card number" name="cardn" id="cardn" maxlength="19">
                         </div>
                         <div class="input-row">
                             <div class="input-wrapper">
                                 <img class="input-image" src="./img/form/cal.svg" alt="num">
-                                <input type="text" id="carddate" class="input-field form-input" placeholder="Date">
+                                <input type="text" id="carddate" class="input-field form-input" name="carddate" placeholder="Date">
                             </div>
                             <div class="input-wrapper">
                                 <img class="input-image" src="./img/form/wal.svg" alt="num">
-                                <input type="text" id="carv" class="input-field form-input" placeholder="СVV"
+                                <input type="text" id="carv" name="carv" class="input-field form-input" placeholder="СVV"
                                     maxlength="3">
                             </div>
                         </div>
                         <div class="input-wrapper">
                             <img class="input-image" src="./img/form/per.svg" alt="num">
-                            <input type="text" id="cardholder" class="input-field form-input" placeholder="Card holder">
+                            <input type="text" id="cardholder" name="cardholder" class="input-field form-input" placeholder="Card holder">
                         </div>
                     </div>
                     <div class="first-title header-primary" id="form-adress">Adress</div>
                     <div class="input-list" id="form-adress-input">
                         <div class="input-wrapper">
                             <img class="input-image" src="./img/form/cit.svg" alt="cit">
-                            <input type="text" class="input-field form-input" placeholder="City" id="cityadress">
+                            <input type="text" class="input-field form-input" placeholder="City" name="cityadress" id="cityadress">
                         </div>
                         <div class="input-wrapper">
                             <img class="input-image" src="./img/form/cit.svg" alt="cit">
-                            <input type="text" class="input-field form-input" placeholder="Adress" id="adressname">
+                            <input type="text" class="input-field form-input" placeholder="Adress" name="adressname" id="adressname">
                         </div>
                         <div class="input-wrapper">
                             <img class="input-image" src="./img/form/cit.svg" alt="cit">
-                            <input type="text" class="input-field form-input" placeholder="ZIP Code" id="adresszip">
+                            <input type="text" class="input-field form-input" placeholder="ZIP Code" name="adresszip" id="adresszip">
                         </div>
                     </div>
                 </form>
