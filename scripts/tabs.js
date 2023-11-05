@@ -10,8 +10,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateArrowButtons() {
     const currentTab = document.querySelector(".tab-action.active");
+    const currentContent = document.querySelector(".tab-content.active");
+    const hasSelectedSurveyItem = currentContent.querySelector(
+      ".tab-survey-item.selected-content"
+    );
+
     arrowLeft.disabled = currentTab.previousElementSibling === null;
-    arrowRight.disabled = currentTab.nextElementSibling === null;
+    arrowRight.disabled =
+      currentTab.nextElementSibling === null || !hasSelectedSurveyItem;
+
+    const tabsWrapper = document.querySelector(".tabs-wrapper");
+    if (
+      currentTab.dataset.tab === "tab8" ||
+      currentTab.dataset.tab === "tab9" ||
+      currentTab.dataset.tab === "tab10"
+    ) {
+      tabsWrapper.scrollLeft = tabsWrapper.scrollWidth;
+    }
   }
 
   arrowLeft.addEventListener("click", function () {
@@ -33,14 +48,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const activeContent = document.querySelector(".tab-content.active");
       const newActiveContent = document.getElementById(`${target}-content`);
 
-      // Slide out the currently active content to the left
       if (activeContent) {
         activeContent.style.transform = "translateX(-100%)";
       }
-      // Slide in the new content from the right
       newActiveContent.style.transform = "translateX(0)";
 
-      // Update active states after the transition completes
       tabs.forEach((t) => t.classList.remove("active"));
       contents.forEach((content) => content.classList.remove("active"));
 
@@ -52,7 +64,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const allTabsSelected = Array.from(tabs).every((tab) =>
       tab.classList.contains("active-tab-action")
     );
-    submitQuizBtn.style.display = allTabsSelected ? "block" : "none";
+    const arrowsBtns = document.querySelector(".arrow-btns");
+    if (allTabsSelected) {
+      submitQuizBtn.style.visibility = "visible";
+      arrowsBtns.style.visibility = "hidden";
+    } else {
+      submitQuizBtn.style.visibility = "hidden";
+      arrowsBtns.style.visibility = "visible";
+    }
   }
   surveyItems.forEach((item) => {
     item.addEventListener("click", function () {
@@ -66,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
       item.classList.add("selected-content");
       parentTabAction.classList.add("active-tab-action");
       updateSubmitButton();
+      updateArrowButtons();
     });
   });
   updateSubmitButton();

