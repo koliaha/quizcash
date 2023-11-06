@@ -34,12 +34,14 @@ document.addEventListener("DOMContentLoaded", function () {
       block.classList.add("selected-content");
 
       // Enable the quiz button
-      quizButton 
-      ? quizButton.disabled = false
-      :''
+      quizButton ? (quizButton.disabled = false) : "";
     });
   });
   quizButton?.addEventListener("click", function () {
-    window.location.href = "../survey.html";
+    var date = new Date();
+    date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+    var expires = "expires=" + date.toUTCString();
+    document.cookie = "quized" + "=" + true + ";" + expires + ";path=/";
+    window.location.href = "./survey.html";
   });
 });

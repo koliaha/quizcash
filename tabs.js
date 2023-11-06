@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
       updateArrowButtons();
     });
   });
+
   updateSubmitButton();
   updateArrowButtons();
 });

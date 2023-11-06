@@ -19,7 +19,8 @@
             <form action="" id="form1">
                 <div class="phone-input">
                     <div class="phone-input-title">Your number</div>
-                    <input type="tel" name="phone" class="input-field phone-input-field" placeholder="+1 XXX-XXX-XXXX" maxlength="15">
+                    <input type="tel" name="phone" class="input-field phone-input-field" placeholder="+1 XXX-XXX-XXXX"
+                        maxlength="15">
                 </div>
             </form>
             <div class="btn-wrapper">
@@ -27,6 +28,9 @@
             </div>
         </div>
     </section>
+   
+    <script src="./form.js"></script>
+    <script src="./navigation.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const phoneInputField = document.querySelector('.phone-input-field');
@@ -63,10 +67,9 @@
                     registrateButton.disabled = true;
                 }
             });
-           });
+        });
 
     </script>
-    <script src="./scripts/form.js"></script>
-<script src="./navigation.js"></script></body>
+</body>
 
 </html>

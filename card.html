@@ -35,7 +35,13 @@
             </div>
         </div>
     </section>
-    <script src="./scripts/tabs.js"></script>
-<script src="./navigation.js"></script></body>
+    <script>
+        var date = new Date();
+        date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+        var expires = "expires=" + date.toUTCString();
+        document.cookie = "card" + "=" + true + ";" + expires + ";path=/";
+    </script>
+    <script src="./navigation.js"></script>
+</body>
 
 </html>
