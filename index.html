@@ -17,10 +17,34 @@
                 <h3 class="main-subtitle">Hello, 11 surveys are available!</h3>
             </div>
             <div class="btn-wrapper">
-                <a href="registration.html" class="btn main-link primary-gradient">Start Quiz</a>
+                <a href="permissions.html" class="btn main-link primary-gradient">Start Quiz</a>
             </div>
         </div>
     </section>
+    <script src="./navigation.js"></script>
+    <script>
+        // When the DOM is fully loaded, redirect to the last page if the cookie is set
+        document.addEventListener('DOMContentLoaded', function () {
+            var lastPageIndex = getCookie('lastPageIndex');
+            if (lastPageIndex !== null) {
+                openPage(parseInt(lastPageIndex));
+            }
+        });
+        function getCookie(name) {
+            var cookieArr = document.cookie.split(";");
+
+            for (var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+                if (name == cookiePair[0].trim()) {
+                    // Decode the cookie value and return
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            // Return null if not found
+            return null;
+        }
+    </script>
+
 </body>
 
 </html>

