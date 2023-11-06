@@ -29,7 +29,8 @@
             </div>
 
             <div class="btn-wrapper">
-                <a href="./tomorrow.html" class="btn main-link primary-gradient">Okay</a>
+                <!-- <a href="./tomorrow.html" class="btn main-link primary-gradient">Okay</a> -->
+                <button id="tomorrow" class="btn main-link primary-gradient quiz-btn">Okay</button>
             </div>
         </div>
     </section>
@@ -38,8 +39,16 @@
         date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
         var expires = "expires=" + date.toUTCString();
         document.cookie = "withdrawal" + "=" + true + ";" + expires + ";path=/";
+        const quizButton = document.getElementById("tomorrow");
+        quizButton?.addEventListener("click", function () {
+            var date = new Date();
+            date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+            var expires = "expires=" + date.toUTCString();
+            document.cookie = "readyForTomorrow" + "=" + true + ";" + expires + ";path=/";
+            window.location.href = "./tomorrow.html";
+        });
     </script>
-    <script src="./tabs.js"></script>
+    <!-- <script src="./tabs.js"></script> -->
     <script src="./navigation.js"></script>
 </body>
 

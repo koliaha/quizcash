@@ -213,7 +213,7 @@ scrollbar-width: none;
   );
 }
 .main-content-title {
-  font-size: 23.149px;
+  font-size: 21.149px;
   font-style: normal;
   text-align: center;
   font-weight: 700;
@@ -256,6 +256,9 @@ scrollbar-width: none;
   flex-direction: column;
   align-items: center;
   margin: 40px 0 10px;
+}
+.main-loader{
+  min-height: 30vh;
 }
 .loader {
   animation: lds-dual-ring 1.2s linear infinite;

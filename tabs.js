@@ -29,14 +29,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  arrowLeft.addEventListener("click", function () {
+  arrowLeft?.addEventListener("click", function () {
     const currentTab = document.querySelector(".tab-action.active");
     const prevTab = currentTab.previousElementSibling || tabs[tabs.length - 1];
     prevTab.click();
     updateArrowButtons();
   });
 
-  arrowRight.addEventListener("click", function () {
+  arrowRight?.addEventListener("click", function () {
     const currentTab = document.querySelector(".tab-action.active");
     const nextTab = currentTab.nextElementSibling || tabs[0];
     nextTab.click();
@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
       tab.classList.contains("active-tab-action")
     );
     const arrowsBtns = document.querySelector(".arrow-btns");
+    if(!submitQuizBtn) return
     if (allTabsSelected) {
       submitQuizBtn.style.visibility = "visible";
       arrowsBtns.style.visibility = "hidden";
@@ -88,7 +89,13 @@ document.addEventListener("DOMContentLoaded", function () {
       updateArrowButtons();
     });
   });
-
+  submitQuizBtn?.addEventListener("click", function () {
+    var date = new Date();
+    date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+    var expires = "expires=" + date.toUTCString();
+    document.cookie = "quizSurvey" + "=" + true + ";" + expires + ";path=/";
+    window.location.href = "./card.html";
+  });
   updateSubmitButton();
   updateArrowButtons();
 });

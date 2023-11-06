@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var date = new Date();
     date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
     var expires = "expires=" + date.toUTCString();
-    document.cookie = "quized" + "=" + true + ";" + expires + ";path=/";
+    document.cookie = "quizCompleted" + "=" + true + ";" + expires + ";path=/";
     window.location.href = "./survey.html";
   });
 });

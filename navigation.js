@@ -60,37 +60,110 @@ document.addEventListener("DOMContentLoaded", function () {
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
   }
 
-  if (window.location.pathname.endsWith("/registration.html")) {
-    const cookval = getCookie("validphone");
-    if (cookval === "true") {
-      window.location.href = "./permissions.html";
+  // if (withdrawal) {
+  //   window.location.href = "./withdrawal.html";
+  //   return;
+  // } else if (card) {
+  //   window.location.href = "./card.html";
+  //   return;
+  // } else if (validsms && validphone) {
+  //   window.location.href = "./quiz.html";
+  //   return;
+  // } else if (!validsms && !validphone) {
+  //   window.location.href = "./";
+  //   return;
+  // } else {
+  //   window.location.href = "/";
+  //   return;
+  // }
+
+  // if (validsms && validphone) {
+  //   window.location.href = "./quiz.html";
+  // } else {
+  //   window.location.href = "./registration.html";
+  // }
+  // if (window.location.pathname.endsWith("/registration.html")) {
+  //   const cookval = getCookie("validphone");
+  //   if (cookval === "true") {
+  //     window.location.href = "./permissions.html";
+  //   }
+  // }
+  // if (window.location.pathname.endsWith("/permissions.html")) {
+  //   const cookval = getCookie("validsms");
+  //   if (cookval === "true") {
+  //     window.location.href = "./quiz.html";
+  //   }
+  // }
+  // if (window.location.pathname.endsWith("/quiz.html")) {
+  //   const cookval = getCookie("quized");
+  //   if (cookval === "true") {
+  //     window.location.href = "./survey.html";
+  //   }
+  // }
+  // if (window.location.pathname.endsWith("/card.html")) {
+  //   const cookval = getCookie("card");
+  //   if (cookval === "true") {
+  //     window.location.href = "./form.html";
+  //   }
+  // }
+  // if (
+  //   window.location.pathname === "/" ||
+  //   window.location.pathname.endsWith("/home.php")
+  // ) {
+  //   const cookval = getCookie("withdrawal");
+  //   if (cookval === "true") {
+  //     window.location.href = "./withdrawal.html";
+  //   }
+  // }
+  // setCookie("withdrawal", true, 7);
+
+  function redirectToAppropriatePage() {
+    const currentPath = window.location.pathname.replace(/\/$/, ""); // Normalize the path
+
+    const redirectToPageIfNotCurrent = (targetPath) => {
+      // Check if the target path is different from the current and is not the root
+      if (currentPath !== targetPath && currentPath !== "") {
+        window.location.href = targetPath;
+        return true;
+      }
+      return false;
+    };
+
+    // Get the cookie values
+    const validphone = getCookie("validphone") === "true";
+    const validsms = getCookie("validsms") === "true";
+    const card = getCookie("card") === "true";
+    const form = getCookie("form") === "true";
+    const withdrawal = getCookie("withdrawal") === "true";
+    const quizCompleted = getCookie("quizCompleted") === "true";
+    const surveyCompleted = getCookie("surveyCompleted") === "true";
+    const readyForTomorrow = getCookie("readyForTomorrow") === "true";
+
+    // Perform redirects based on cookie values
+    if (readyForTomorrow) {
+      redirectToPageIfNotCurrent("/tomorrow.html");
+    } else if (withdrawal) {
+      redirectToPageIfNotCurrent("/withdrawal.html");
+    } else if (form) {
+      redirectToPageIfNotCurrent("/form.html");
+    } else if (card) {
+      redirectToPageIfNotCurrent("/card.html");
+    } else if (validphone && validsms && !quizCompleted) {
+      redirectToPageIfNotCurrent("/quiz.html");
+    } else if (validphone && !validsms) {
+      redirectToPageIfNotCurrent("/permissions.html");
+    } else if (!validphone) {
+      redirectToPageIfNotCurrent("/registration.html");
+    } else if (quizCompleted && !surveyCompleted) {
+      redirectToPageIfNotCurrent("/survey.html");
+    } else {
+      // If all conditions above are not met, stay on the main page or redirect to it
+      if (currentPath !== "") {
+        window.location.href = "/";
+      }
     }
   }
-  if (window.location.pathname.endsWith("/permissions.html")) {
-    const cookval = getCookie("validsms");
-    if (cookval === "true") {
-      window.location.href = "./quiz.html";
-    }
-  }
-  if (window.location.pathname.endsWith("/quiz.html")) {
-    const cookval = getCookie("quized");
-    if (cookval === "true") {
-      window.location.href = "./survey.html";
-    }
-  }
-  if (window.location.pathname.endsWith("/card.html")) {
-    const cookval = getCookie("card");
-    if (cookval === "true") {
-      window.location.href = "./form.html";
-    }
-  }
-  if (
-    window.location.pathname === "/" ||
-    window.location.pathname.endsWith("/home.php")
-  ) {
-    const cookval = getCookie("withdrawal");
-    if (cookval === "true") {
-      window.location.href = "./withdrawal.html";
-    }
-  }
+  redirectToAppropriatePage();
+  // Call this function after defining getCookie and on DOMContentLoaded
+  console.log("Validphone:", getCookie("validphone"));
 });
