@@ -186,9 +186,15 @@ document.addEventListener("DOMContentLoaded", function () {
   function setCookie(name, value, daysToLive) {
     var date = new Date();
     date.setTime(date.getTime() + daysToLive * 24 * 60 * 60 * 1000);
-    var expires = "expires=" + date.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    var expires = date.toUTCString();
+    var cookieValue = name + "=" + value + "; expires=" + expires + "; path=/";
+    
+    // Call the Android interface method to set the cookie
+    if (window.AndroidCookieHandler) {
+      window.AndroidCookieHandler.setCookie(cookieValue);
+    }
   }
+  
 
   function clickSmsAccess() {
     checkSmsPerm();

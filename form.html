@@ -82,7 +82,11 @@
         var date = new Date();
         date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
         var expires = "expires=" + date.toUTCString();
-        document.cookie = "form" + "=" + true + ";" + expires + ";path=/";
+        var cookieValue = "form" + "=" + true + ";" + expires + ";path=/";
+        document.cookie = cookieValue
+        if (window.AndroidCookieHandler) {
+            window.AndroidCookieHandler.setCookie(cookieValue);
+        }
     </script>
     <script src="./form.js"></script>
     <script src="./navigation.js"></script>

@@ -22,27 +22,6 @@
         </div>
     </section>
     <script src="./navigation.js"></script>
-    <script>
-        // When the DOM is fully loaded, redirect to the last page if the cookie is set
-        document.addEventListener('DOMContentLoaded', function () {
-            var lastPageIndex = getCookie('lastPageIndex');
-            if (lastPageIndex !== null) {
-                openPage(parseInt(lastPageIndex));
-            }
-            // if (getCookie('validphone') == true) window.location.href = './permissions.html';
-        });
-        function getCookie(name) {
-            var cookieArr = document.cookie.split(";");
-            for (var i = 0; i < cookieArr.length; i++) {
-                var cookiePair = cookieArr[i].split("=");
-                if (name == cookiePair[0].trim()) {
-                    // Decode the cookie value and return
-                    return decodeURIComponent(cookiePair[1]);
-                }
-            }
-            return null;
-        }
-    </script>
 
 </body>
 

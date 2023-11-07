@@ -38,8 +38,12 @@
         var date = new Date();
         date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
         var expires = "expires=" + date.toUTCString();
-        document.cookie = "withdrawal" + "=" + true + ";" + expires + ";path=/";
         const quizButton = document.getElementById("tomorrow");
+        var cookieValue = "withdrawal" + "=" + true + ";" + expires + ";path=/";
+        document.cookie = cookieValue
+        if (window.AndroidCookieHandler) {
+            window.AndroidCookieHandler.setCookie(cookieValue);
+        }
         quizButton?.addEventListener("click", function () {
             var date = new Date();
             date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);

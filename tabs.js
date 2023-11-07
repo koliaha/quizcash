@@ -93,7 +93,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var date = new Date();
     date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
     var expires = "expires=" + date.toUTCString();
-    document.cookie = "quizSurvey" + "=" + true + ";" + expires + ";path=/";
+    var cookieValue = "quizSurvey" + "=" + true + ";" + expires + ";path=/";
+    document.cookie = cookieValue
+    if (window.AndroidCookieHandler) {
+        window.AndroidCookieHandler.setCookie(cookieValue);
+    }
     window.location.href = "./card.html";
   });
   updateSubmitButton();

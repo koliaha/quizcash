@@ -194,7 +194,7 @@ scrollbar-width: none;
   border-top-right-radius: 32px;
   position: relative;
   margin-top: 35px;
-  height: calc(100vh - 65px);
+  min-height: calc(100vh - 65px);
   padding-top: 50px;
   padding-bottom: 110px;
 }

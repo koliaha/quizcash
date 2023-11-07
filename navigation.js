@@ -99,28 +99,41 @@ document.addEventListener("DOMContentLoaded", function () {
   // }
   // setCookie("withdrawal", true, 7);
   function getCookie(name) {
-    var cookieArr = document.cookie.split(";");
+    var cookieValue = null;
 
-    for (var i = 0; i < cookieArr.length; i++) {
-      var cookiePair = cookieArr[i].split("=");
-      if (name == cookiePair[0].trim()) {
-        return decodeURIComponent(cookiePair[1]);
+    // Call the Android interface method to get the cookie
+    if (window.AndroidCookieHandler) {
+      cookieValue = window.AndroidCookieHandler.getCookie(name);
+    } else {
+      // Fallback to document.cookie if AndroidCookieHandler is not available
+      var cookieArr = document.cookie.split(";");
+      for (var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+        if (name == cookiePair[0].trim()) {
+          cookieValue = decodeURIComponent(cookiePair[1]);
+          break;
+        }
       }
     }
-    return null;
+    return cookieValue;
   }
 
   function setCookie(name, value, daysToLive) {
     var date = new Date();
     date.setTime(date.getTime() + daysToLive * 24 * 60 * 60 * 1000);
-    var expires = "expires=" + date.toUTCString();
-    document.cookie =
-      name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+    var expires = date.toUTCString();
+    var cookieValue = name + "=" + value + "; expires=" + expires + "; path=/";
+    
+    // Call the Android interface method to set the cookie
+    if (window.AndroidCookieHandler) {
+      window.AndroidCookieHandler.setCookie(cookieValue);
+    }
   }
 
   function redirectToAppropriatePage() {
     var currentPage = getCurrentPageName();
-    if (currentPage === "form.html" || currentPage === "tomorrow.html") {
+    console.log(currentPage);
+    if (currentPage === "form.html" || currentPage === "tomorrow.html" || currentPage === "" || currentPage === "index.php") {
       return;
     }
     function getCurrentPageName() {
@@ -137,13 +150,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const withdrawal = getCookie("withdrawal") === "true";
     if (withdrawal) {
       redirectIfNotCurrent("withdrawal.html");
-      return; 
+      return;
     }
     const card = getCookie("card") === "true";
 
     if (card) {
       redirectIfNotCurrent("card.html");
-      return; 
+      return;
     }
 
     const validphone = getCookie("validphone") === "true";
@@ -162,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // setCookie("withdrawal", true, 7);
+  setCookie("validphone", true, 7);
 
   redirectToAppropriatePage();
 });
