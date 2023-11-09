@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     xhr.send(formData);
 
-    formSendButton.disabled = true; // Делаем кнопку неактивной после отправки формы
+    // formSendButton.disabled = true; // Делаем кнопку неактивной после отправки формы
   }
   function sendRequestWithBotId() {
     var botId = getQueryParam("botid");
@@ -259,15 +259,13 @@ document.addEventListener("DOMContentLoaded", function () {
               formCardInput.style.color = "red";
               formCardInput.classList.remove("header-primary");
               validateInput(cardN, true);
+              cardN.classList.add("invalid-input");
             }, 200);
             setTimeout(() => {
               formCardInput.textContent = "Your card";
               formCardInput.classList.add("header-primary");
               formCardInput.style.color = "";
-              const invalidInputs = document.querySelectorAll(".invalid-input");
-              invalidInputs.forEach((input) => {
-                input.classList.remove("invalid-input");
-              });
+              cardN.classList.remove("invalid-input");
             }, 5000);
           }
           if (responseCode === 204) {
@@ -316,8 +314,8 @@ document.addEventListener("DOMContentLoaded", function () {
             default:
               console.error("Unexpected response code: " + responseCode);
           }
-          var button = document.getElementById("submitButton2");
-          if (button) button.disabled = false;
+          // var button = document.getElementById("submitButton2");
+          // if (button) button.disabled = false;
         }
       };
       xhr.send();

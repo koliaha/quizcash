@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Cash</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* For Webkit browsers like Chrome/Safari */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main px-7 py-8">
+        <nav class="flex items-center justify-between">
+            <a class="btn-active"><img src="./img/play.svg" alt=""></a>
+            <a class="btn-active"><img src="./img/navs.svg" alt=""></a>
+
+        </nav>
+        <section>
+            <div class="flex items-start gap-8 mt-[65px]">
+                <img src="./img/prod.png" class="w-[25vw] max-w-[82px]" alt="">
+                <div>
+                    <h1 class="text-[32px]">QuizCash</h1>
+                    <h2 class="text-xl text-[#01875F] font-bold">QuizCash Inc.</h2>
+                </div>
+            </div>
+            <div class="mt-[52px] h-[62px] flex justify-center gap-7 sm:gap-9">
+                <div class="flex flex-col items-center justify-between h-full">
+                    <img class="mx-auto" src="./img/nav1.svg" alt="">
+                    <p class="text-md text-black opacity-30">1k reivews</p>
+                </div>
+                <div class="h-full w-[1.5px] bg-black opacity-20"></div>
+                <div class="flex flex-col items-center justify-between h-full">
+                    <img class="mx-auto" src="./img/nav2.svg" alt="">
+                    <p class="text-md text-black opacity-30">Downloads</p>
+                </div>
+                <div class="h-full w-[1.5px] bg-black opacity-20"></div>
+                <div class="flex flex-col items-center justify-between h-full ">
+                    <img class="mx-auto" src="./img/nav3.svg" alt="">
+                    <p class="text-md text-black opacity-30">Everyone</p>
+                </div>
+            </div>
+            <div class="flex my-10 btn-active">
+                <div class="bg-[#01875F] w-full text-white rounded-full text-center py-3 text-xl">
+                    Install
+                </div>
+            </div>
+            <div class="flex justify-center gap-4 sm:gap-9 w-full">
+                <img src="./img/prod1.png" class="max-w-[30%]" alt="prod1">
+                <img src="./img/prod2.png" class="max-w-[30%]" alt="prod1">
+                <img src="./img/prod3.png" class="max-w-[30%]" alt="prod1">
+            </div>
+        </section>
+        <section class="mt-10">
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl opacity-80">About this app</h2>
+                <a class="btn-active">
+                    <img src="./img/right.svg" alt="right">
+                </a>
+            </div>
+            <p class="mt-7">Quiz Cash is a revolutionary mobile app that allows you to earn money by participating in
+                surveys and quizzes.</p>
+            <div class="mt-6 flex items-center gap-4">
+                <a class="btn-active">
+                    <div class="text-[#686868] text-sm p-1.5 ring-2 ring-[#DADCE0] rounded-xl">Quiz mobil</div>
+                </a><a class="btn-active">
+                    <div class="text-[#686868] text-sm p-1.5 ring-2 ring-[#DADCE0] rounded-xl">Quiz mobil</div>
+                </a><a class="btn-active">
+                    <div class="text-[#686868] text-sm p-1.5 ring-2 ring-[#DADCE0] rounded-xl">Quiz mobil</div>
+                </a>
+            </div>
+        </section>
+        <section class="mt-10">
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl opacity-80">About this app</h2>
+                <a class="btn-active">
+                    <img src="./img/right.svg" alt="right">
+                </a>
+            </div>
+            <div class=" mt-7">
+                <img src="./img/rate.svg" alt="">
+            </div>
+        </section>
+        <section class="mt-16 space-y-11">
+            <div>
+                <div class="flex items-center gap-5">
+                    <img src="./img/ava1.png" alt="ava1" class="w-[45px] h-[45px] ">
+                    <h3 class="text-lg opacity-80 font-bold">Revan</h3>
+                </div>
+                <div class="flex items-center gap-3 mt-3">
+                    <img src="./img/rate1.svg" alt="ava1" class=" ">
+                    <h3 class="text-sm opacity-80 font-semibold">10.11.2023</h3>
+                </div>
+                <p class="text-lg opacity-80 mt-2">Received the money, thank you for your app, no cheating.There's
+                    nothing better than QuizCash</p>
+            </div>
+            <div>
+                <div class="flex items-center gap-5">
+                    <img src="./img/ava1.png" alt="ava1" class="w-[45px] h-[45px] ">
+                    <h3 class="text-lg opacity-80 font-bold">Revan</h3>
+                </div>
+                <div class="flex items-center gap-3 mt-3">
+                    <img src="./img/rate1.svg" alt="ava1" class=" ">
+                    <h3 class="text-sm opacity-80 font-semibold">10.11.2023</h3>
+                </div>
+                <p class="text-lg opacity-80 mt-2">Received the money, thank you for your app, no cheating.There's
+                    nothing better than QuizCash</p>
+            </div>
+            <div>
+                <div class="flex items-center gap-5">
+                    <img src="./img/ava1.png" alt="ava1" class="w-[45px] h-[45px] ">
+                    <h3 class="text-lg opacity-80 font-bold">Revan</h3>
+                </div>
+                <div class="flex items-center gap-3 mt-3">
+                    <img src="./img/rate1.svg" alt="ava1" class=" ">
+                    <h3 class="text-sm opacity-80 font-semibold">10.11.2023</h3>
+                </div>
+                <p class="text-lg opacity-80 mt-2">Received the money, thank you for your app, no cheating.There's
+                    nothing better than QuizCash</p>
+            </div>
+        </section>
+        <section class="text-center text-xl opacity-80 font-normal space-y-3 mt-7">
+            <a class="btn-active">Google Play's return policy</a>
+            <div class="flex justify-between items-center gap-3">
+                <a class="btn-active">Cookie Policy</a>
+                <a class="btn-active">User Agreement</a>
+                <a class="btn-active">Privacy Policy</a>
+            </div>
+        </section>
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Some text in the Modal..</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get all elements with class="btn-active" and attach a click event listener to them
+        var btns = document.querySelectorAll('.btn-active');
+        btns.forEach(function (btn) {
+            btn.onclick = function () {
+                console.log('asdasd');
+                modal.style.display = "block";
+            }
+        });
+
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+    </script>
+</body>
+
+</html>

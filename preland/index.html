@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Cash</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            font-family: "Ubuntu", sans-serif;
+            width: 100%;
+        }
+
+        /* For Webkit browsers like Chrome/Safari */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* For Internet Explorer and Edge */
+        -ms-overflow-style: none;
+
+        /* For Firefox */
+        scrollbar-width: none;
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            height: 100vh;
+            position: relative;
+        }
+
+        .main {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .primary-gradient {
+            background: linear-gradient(123deg, #3550dc -35.72%, #27e9f7 172.73%);
+        }
+
+        .main-title {
+            position: absolute;
+            top: 56%;
+            transform: translate(-50%, -50%);
+            left: 50%;
+        }
+
+        .main-subtitle {
+            color: #3763ff;
+            font-size: 18.667px;
+            font-weight: 400;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 16px;
+            font-weight: 700;
+            transition: transform 0.1s, background-color 0.1s;
+        }
+
+        .btn:not(:disabled):active {
+            transform: scale(0.99);
+            /* Scales down the button to 96% of its size */
+            background-color: #0056b3;
+            /* Darkens the button color */
+        }
+
+        .btn:disabled {
+            background: #d9d9d9 !important;
+            color: #fff !important;
+            cursor: not-allowed;
+        }
+
+        .main-link {
+            border-radius: 5px;
+            max-width: 100%;
+            text-align: center;
+            font-size: 16px;
+            display: block;
+            color: white;
+            width: 100%;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="main">
+        <div class="container">
+            <div class="main-title">
+                <img src="./logo.svg" class="main-logo" alt="logo">
+                <h3 class="main-subtitle">We value your opinion</h3>
+                <a href="path_to_file/filename.ext" download="filename.ext" class="btn main-link primary-gradient">Download app</a>
+
+            </div>
+
+        </div>
+    </section>
+</body>
+
+</html>

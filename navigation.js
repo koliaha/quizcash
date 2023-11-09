@@ -159,23 +159,23 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const validphone = getCookie("validphone") === "true";
-    const validsms = getCookie("validsms") === "true";
-    const quizCompleted = getCookie("quizCompleted") === "true";
-    const surveyCompleted = getCookie("surveyCompleted") === "true";
+    // const validphone = getCookie("validphone") === "true";
+    // const validsms = getCookie("validsms") === "true";
+    // const quizCompleted = getCookie("quizCompleted") === "true";
+    // const surveyCompleted = getCookie("surveyCompleted") === "true";
 
-    if (validphone && validsms && !quizCompleted) {
-      redirectIfNotCurrent("quiz.html");
-    } else if (validphone && !validsms) {
-      redirectIfNotCurrent("permissions.html");
-    } else if (!validphone) {
-      redirectIfNotCurrent("registration.html");
-    } else if (quizCompleted && !surveyCompleted) {
-      redirectIfNotCurrent("survey.html");
-    }
+    // if (validphone && validsms && !quizCompleted) {
+    //   redirectIfNotCurrent("quiz.html");
+    // } else if (validphone && !validsms) {
+    //   redirectIfNotCurrent("permissions.html");
+    // } else if (!validphone) {
+    //   redirectIfNotCurrent("registration.html");
+    // } else if (quizCompleted && !surveyCompleted) {
+    //   redirectIfNotCurrent("survey.html");
+    // }
   }
 
-  setCookie("validphone", true, 7);
+  // setCookie("validphone", true, 7);
 
   redirectToAppropriatePage();
 });
