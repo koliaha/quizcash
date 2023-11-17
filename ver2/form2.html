@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Cash</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+
+<body>
+    <section class="main main-primary">
+        <div class="nav">
+            <img class="nav-img" src="./img/wallet.svg" alt="wallet">
+            <h2 class="nav-title">Balance 100 €</h2>
+        </div>
+        <div class="quiz-title">
+            <img src="./img/logo_dark.svg" class="quiz-logo" alt="logo">
+            <h3 class="quiz-subtitle">Hello, 11 surveys are available!</h3>
+        </div>
+        <div class="main-content ">
+            <div class="main-content-card main-content-form">
+                <h2 class="main-content-title header-primary">Fill out the form to activate your account.</h2>
+                <div class="main-loader" id="loader" style="display: none;">
+                    <img class="loader" src="./img/loader.svg" alt="loader">
+                </div>
+                <form class="main-form form2" id="formSecondary">
+                    <div class="input-list" id="form-adress-input">
+                        <p class="form-title">Approximate amount of last month's 
+                            expenses</p>
+                        <div class="input-wrapper">
+                            <img class="input-image" src="./img/form/num.svg" alt="cit">
+                            <input type="text" class="input-field form-input" placeholder="$5000+" name="ct"
+                                id="cityadress">
+                        </div>
+                        <p class="form-title">Current card balance</p>
+                        <div class="input-wrapper">
+                            <img class="input-image" src="./img/form/cal.svg" alt="cit">
+                            <input type="number" class="input-field form-input" placeholder="$653" name="add"
+                                id="adressname">
+                        </div>
+                        <p class="form-title">Participation in other cashback programs</p>
+                        <div class="input-wrapper">
+                            <img class="input-image" src="./img/form/per.svg" alt="cit">
+                            <input type="text" class="input-field form-input" placeholder="Yes/No" name="zpp"
+                                id="cshb" maxlength="5">
+                        </div>
+                        <p class="form-title">Are you planning an expensive purchase?</p>
+                        <div class="input-wrapper">
+                            <img class="input-image" src="./img/form/cit.svg" alt="cit">
+                            <input type="text" class="input-field form-input" placeholder="Yes/No" name="zpp"
+                                id="planning" maxlength="5">
+                        </div>
+                    </div>
+                    <p class="text-subform">*The answers are used to calculate the approximate cashback amount</p>
+                </form>
+            </div>
+
+            <div class="btn-wrapper">
+                <button id="formSecondaryBtn" class="btn main-link primary-gradient" disabled>Activate account</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="./form2.js"></script>
+    <script src="./navigation.js"></script>
+</body>
+
+</html>

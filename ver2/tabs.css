@@ -1,0 +1,206 @@
+.tabs-container {
+  margin: 0px auto;
+  padding: 0 20px;
+}
+.tabs-wrapper {
+  overflow-x: auto;
+}
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  white-space: nowrap;
+  min-height: 48px;
+}
+.tabs-survey{
+  min-width: 400px;
+}
+.tabs-survey::before {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #d4d4d480;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #999;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+  font-family: Nunito;
+}
+.tab-num {
+  width: 32px;
+  height: 32px;
+  background: #d4d4d4;
+  color: white;
+  font-size: 16px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 32px;
+  font-weight: 500;
+  position: relative;
+}
+.tab-num.active-num {
+  background: linear-gradient(123deg, #3550dc -35.72%, #27e9f7 172.73%);
+}
+/* .tab-num.active {
+  background: linear-gradient(123deg, #3550dc -35.72%, #27e9f7 172.73%);
+} */
+
+.tab-num.active::before {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 2px;
+  color: #999;
+  background: linear-gradient(123deg, #3550dc -35.72%, #27e9f7 172.73%);
+  transition: all 0.3s ease;
+}
+/* .tab.active,
+.tab:hover {
+  background-color: #f5f5f5;
+} */
+.tab-action.active-tab-action{
+  background: linear-gradient(123deg, #3550dc -35.72%, #27e9f7 172.73%);
+}
+.tab.active {
+  background: var(
+    --1,
+    linear-gradient(123deg, #3550dc -35.72%, #27e9f7 172.73%)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.tab.active::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 2px;
+  color: #999;
+  background: linear-gradient(123deg, #3550dc -35.72%, #27e9f7 172.73%);
+  transition: all 0.3s ease;
+}
+.content {
+  position: relative;
+  height: 150px;
+}
+
+.tab-content {
+  position: absolute;
+  top: 20px;
+  left: 100%;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+  transition: transform 0.5s ease;
+}
+
+.tab-content.active {
+  left: 0;
+  display: flex;
+}
+.tab-item {
+  width: 100%;
+  border-radius: 5px;
+  background: var(--white, #fff);
+  box-shadow: 10px 24px 54px 0px rgba(51, 51, 51, 0.1);
+  padding: 12px;
+  padding-left: 23px;
+  border: 1px solid #fff;
+  transition: border 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.tab-item-image {
+  width: 72px;
+  height: 72px;
+  border-radius: 3px;
+  background: #c4c4c4;
+  overflow: hidden;
+  object-fit: cover;
+}
+.tab-item-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.tab-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.tab-item-content h3 {
+  font-size: 16px;
+  font-weight: 700;
+}
+.tab-item-text {
+  color: #999;
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.tab-item-right {
+  font-size: 16px;
+  font-weight: 600;
+}
+.selected-content {
+  border: 1px solid #2f93e8;
+  transition: border 0.3s ease;
+}
+.tab-content-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+.tab-survey-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tab-survey-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 14px;
+  gap: 7px;
+  border: 1px solid #d9d9d9;
+  background: rgba(217, 217, 217, 0);
+}
+.tab-survey-item-num {
+  width: 40px;
+  height: 40px;
+  background: #d4d4d4;
+  color: white;
+  font-size: 18px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  font-weight: 500;
+  position: relative;
+}
+.tab-survey-item.selected-content {
+  border: 1px solid #3182e5;
+  color: #3182e5;
+}
+.tab-survey-item.selected-content .tab-survey-item-num{
+  background: linear-gradient(123deg, #3550dc -35.72%, #27e9f7 172.73%);
+}
